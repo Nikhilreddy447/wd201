@@ -8,29 +8,30 @@ const markAsComplete = (index) => {
 }
 
 const overdue = () => {
-    const todaysDate = new Date().toISOString().split("T")[0];
-    return all.filter(item => item.dueDate < todaysDate);
+    const today = new Date().toISOString().split("T")[0];
+    return all.filter(item => item.dueDate < today);
 }
 
 const dueToday = () => {
-    const todaysDate = new Date().toISOString().split("T")[0];
-    return all.filter(item =>item.dueDate === todaysDate);
+    const today = new Date().toISOString().split("T")[0];
+    return all.filter(item =>item.dueDate === today);
 }
 
 const dueLater = () => {
-    const todaysDate = new Date().toISOString().split("T")[0];
-    return all.filter(item =>  item.dueDate > todaysDate);
+    const today = new Date().toISOString().split("T")[0];
+    return all.filter(item =>  item.dueDate > today);
 }
 
-const toDisplayableList = (todoslist) => {
-    let dispalyList = "";
-    todoslist.forEach(item =>{
-        const statusOfDue = item.completed ? "[x]" :"[ ]";
-        const titleOfItem = item.title;
-        const dueDate = item.dueDate === today ? "" :`${item.dueDate}`;
-        dispalyList += `${statusOfDue} ${titleOfItem} ${dueDate}\n` 
+const toDisplayableList = (todoList ) => {
+    let displayableList = "";
+    todoList .forEach(item => {
+    const status = item.completed ? "[x]" : "[ ]";
+    const title = item.title;
+    const dueDate = item.dueDate === today ? "" : ` ${item.dueDate}`;
+    displayableList += `${status} ${title}${dueDate}\n`;
     });
-    return dispalyList;
+    displayableList = displayableList.slice(0,-2)
+    return displayableList;
 }
 
 return {
