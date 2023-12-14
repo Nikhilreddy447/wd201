@@ -25,7 +25,7 @@ const dueLater = () => {
 const toDisplayableList = (todoslist) => {
     let dispalyList = "";
     todoslist.forEach(item =>{
-        const statusOfDue = item.completed ? "[X]" :"[ ]";
+        const statusOfDue = item.completed ? "[x]" :"[ ]";
         const titleOfItem = item.title;
         const dueDate = item.dueDate === today ? "" :`${item.dueDate}`;
         dispalyList += `${statusOfDue} ${titleOfItem} ${dueDate}\n` 
@@ -47,7 +47,7 @@ return {
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
 // ####################################### #
-/*
+
 const todos = todoList();
 
 const formattedDate = d => {
@@ -88,6 +88,6 @@ let itemsDueLater = todos.dueLater()
 let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater)
 console.log(formattedItemsDueLater)
 console.log("\n\n")
-*/
 
-module.exports = todoList;
+
+//module.exports = todoList;
