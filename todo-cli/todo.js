@@ -30,7 +30,7 @@ const toDisplayableList = (todoList ) => {
     const dueDate = item.dueDate === today ? "" : ` ${item.dueDate}`;
     displayableList += `${status} ${title}${dueDate}\n`;
     });
-    displayableList = displayableList.slice(0,-2)
+    displayableList = displayableList.slice(0,-1)
     return displayableList;
 }
 
