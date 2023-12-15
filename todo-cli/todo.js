@@ -1,48 +1,49 @@
+/* eslint-disable no-undef */
 const todoList = () => {
-all = []
-const add = (todoItem) => {
-    all.push(todoItem)
-}
-const markAsComplete = (index) => {
-    all[index].completed = true
-}
+  all = [];
+  const add = (todoItem) => {
+    all.push(todoItem);
+  };
+  const markAsComplete = (index) => {
+    all[index].completed = true;
+  };
 
-const overdue = () => {
+  const overdue = () => {
     const today = new Date().toISOString().split("T")[0];
-    return all.filter(item => item.dueDate < today);
-}
+    return all.filter((item) => item.dueDate < today);
+  };
 
-const dueToday = () => {
+  const dueToday = () => {
     const today = new Date().toISOString().split("T")[0];
-    return all.filter(item =>item.dueDate === today);
-}
+    return all.filter((item) => item.dueDate === today);
+  };
 
-const dueLater = () => {
+  const dueLater = () => {
     const today = new Date().toISOString().split("T")[0];
-    return all.filter(item =>  item.dueDate > today);
-}
+    return all.filter((item) => item.dueDate > today);
+  };
 
-const toDisplayableList = (todoList ) => {
+  const toDisplayableList = (todoList) => {
     let displayableList = "";
-    todoList .forEach(item => {
-    const status = item.completed ? "[x]" : "[ ]";
-    const title = item.title;
-    const dueDate = item.dueDate === today ? "" : ` ${item.dueDate}`;
-    displayableList += `${status} ${title}${dueDate}\n`;
+    todoList.forEach((item) => {
+      const status = item.completed ? "[x]" : "[ ]";
+      const title = item.title;
+      const dueDate = item.dueDate === today ? "" : ` ${item.dueDate}`;
+      displayableList += `${status} ${title}${dueDate}\n`;
     });
-    displayableList = displayableList.slice(0,-1)
+    displayableList = displayableList.slice(0, -1);
     return displayableList;
-}
+  };
 
-return {
+  return {
     all,
     add,
     markAsComplete,
     overdue,
     dueToday,
     dueLater,
-    toDisplayableList
-};
+    toDisplayableList,
+  };
 };
 
 // ####################################### #
