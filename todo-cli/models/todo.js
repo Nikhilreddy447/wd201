@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
+// models/todo.js
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -11,32 +13,25 @@ module.exports = (sequelize, DataTypes) => {
     static async addTask(params) {
       return await Todo.create(params);
     }
-    static associate(models) {
-      // define association here
-    }
     static async showList() {
       console.log("My Todo list \n");
 
       console.log("Overdue");
-      let overDueString = await Todo.overdue();
-      console.log(
-        overDueString.map((items) => items.displayableString()).join("\n"),
-      );
+      let over = await Todo.overdue();
+      console.log(over.map((items) => items.displayableString()).join("\n"));
       console.log("\n");
 
       console.log("Due Today");
-      let todayDueString = await Todo.dueToday();
-      console.log(
-        todayDueString.map((items) => items.displayableString()).join("\n"),
-      );
+      let tod = await Todo.dueToday();
+      console.log(tod.map((items) => items.displayableString()).join("\n"));
       console.log("\n");
 
       console.log("Due Later");
-      let laterDueString = await Todo.dueLater();
-      console.log(
-        laterDueString.map((items) => items.displayableString()).join("\n"),
-      );
+      let later = await Todo.dueLater();
+      console.log(later.map((items) => items.displayableString()).join("\n"));
     }
+
+    static today = new Date().toISOString().split("T")[0];
 
     static async overdue() {
       const over = await Todo.findAll({
@@ -79,8 +74,10 @@ module.exports = (sequelize, DataTypes) => {
       }
       console.log("Item not Found !");
     }
+
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
+
       const checkToday = (date, t) => {
         let date_arr = String(date).split("-");
         let today_arr = String(t).split("-");
