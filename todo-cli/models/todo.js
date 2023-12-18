@@ -18,34 +18,84 @@ module.exports = (sequelize, DataTypes) => {
       console.log("My Todo list \n");
 
       console.log("Overdue");
-      // FILL IN HERE
+      let overDueString = await Todo.overdue();
+      console.log(
+        overDueString.map((items) => items.displayableString()).join("\n"),
+      );
       console.log("\n");
 
       console.log("Due Today");
-      // FILL IN HERE
+      let todayDueString = await Todo.dueToday();
+      console.log(
+        todayDueString.map((items) => items.displayableString()).join("\n"),
+      );
       console.log("\n");
 
       console.log("Due Later");
-      // FILL IN HERE
+      let laterDueString = await Todo.dueLater();
+      console.log(
+        laterDueString.map((items) => items.displayableString()).join("\n"),
+      );
     }
 
     static async overdue() {
-      // FILL IN HERE TO RETURN OVERDUE ITEMS
+      const over = await Todo.findAll({
+        where: {
+          dueDate: {
+            [sequelize.Sequelize.Op.lt]: Todo.today,
+          },
+        },
+      });
+      return over;
     }
 
     static async dueToday() {
-      // FILL IN HERE TO RETURN ITEMS DUE tODAY
+      const tod = await Todo.findAll({
+        where: {
+          dueDate: Todo.today,
+        },
+      });
+      return tod;
     }
 
     static async dueLater() {
-      // FILL IN HERE TO RETURN ITEMS DUE LATER
+      let tom = new Date().setDate(new Date().getDate() + 1);
+      const lat = await Todo.findAll({
+        where: {
+          dueDate: {
+            [sequelize.Sequelize.Op.gte]: tom,
+          },
+        },
+      });
+      return lat;
     }
 
     static async markAsComplete(id) {
-      // FILL IN HERE TO MARK AN ITEM AS COMPLETE
+      const item = await Todo.findByPk(id);
+
+      if (item) {
+        item.completed = true;
+        await item.save();
+      }
+      console.log("Item not Found !");
     }
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
+      const checkToday = (date, t) => {
+        let date_arr = String(date).split("-");
+        let today_arr = String(t).split("-");
+
+        for (let i = 0; i < 8; i++) {
+          if (date_arr[i] != today_arr[i]) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      if (checkToday(this.dueDate, Todo.today)) {
+        return `${this.id}. ${checkbox} ${this.title}`;
+      }
       return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
     }
   }
